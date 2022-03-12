@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FechasYEdades
 {
@@ -10,6 +6,11 @@ namespace FechasYEdades
     {
         static void Main(string[] args)
         {
+            Messages.ShowIntro();
+            string dateOne = Funciones.ReadData("Introduce la primera fecha en formato dd/mm/yyyy: ");
+            string dateTwo = Funciones.ReadData("Introduce la segunda fecha en formato dd/mm/yyyy: ");
+            DateTime data = DateTime.Today;             
         }
     }
 }
+
