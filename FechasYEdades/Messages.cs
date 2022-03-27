@@ -24,9 +24,12 @@ namespace FechasYEdades
             Console.WriteLine("Pulse una tecla para continuar...");
             Console.ReadKey();
         }
-        public static void Print()
+        public static void Print(string mensaje)
         {
-
+            Console.Clear();
+            Console.WriteLine(mensaje);
+            Console.WriteLine("Pulse una tecla para continuar...");
+            Console.ReadKey();
         }
     }
 }

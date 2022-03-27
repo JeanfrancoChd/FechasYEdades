@@ -3,112 +3,94 @@ namespace FechasYEdades
 {
     class Funciones
     {
-        public static string ReadData(string message)
+        public static DateTime ReadData(string message)
         {
-            bool itsCorrect = false;
-            string input = "";
-            while (!itsCorrect)
+            DateTime data = new DateTime();
+            bool comprobante = false;
+            do
             {
                 Console.Clear();
-                Console.Write(message);
-                input = Console.ReadLine();
-                itsCorrect = Funciones.ValidateData(input);
-            }
-            return input;
-        }
-        private static bool ValidateData(string input)
-        {
-            bool itsCorrect = false;
-            const int position = 3;
-            input = Console.ReadLine();
-            if (input != "")
-            {
-                if (input.IndexOf('/') == -1)
+                Console.WriteLine(message);
+                if (DateTime.TryParse(Console.ReadLine(), out data))
                 {
-                    Messages.FailData();
+                    comprobante = true;
                 }
                 else
                 {
-                    string[] dateSplited = input.Split('/');
-                    int[] comprobatedNum = new int[dateSplited.Length];
-
-                    if (dateSplited.Length != position)
-                    {
-                        Messages.FailData();
-                    }
-                    else
-                    {
-                        int counter = 0;
-                        bool end = false;
-                        while (!end)
-                        {
-                            if (counter >= dateSplited.Length)
-                            {
-                                end = true;
-                            }
-                            else
-                            {
-                                if (!Int32.TryParse(dateSplited[counter], out comprobatedNum[counter]))
-                                {
-                                    Messages.FailData();
-                                    end = true;
-                                }
-                                else
-                                {
-                                    counter++;
-                                }
-                            }
-                        }
-                        if (!Funciones.ValidateDate(comprobatedNum,dateSplited))
-                        {
-                            Messages.FailData();
-                        }
-
-                    }
+                    Messages.Print("La fecha no es válida. Inténtalo otra vez.");
                 }
             }
-            else
-            {
-                Messages.FailData();
-            }
-            return itsCorrect;
+            while (!comprobante);
+            return data;
         }
-        private static bool ValidateDate(int[] comprobatedNum, string[]dates)
+        public static string DiffDate(DateTime date, DateTime Hoy)
         {
-            bool result = false;//****************************************************************************
-            int[,] diasMeses = new int[,] { { 1, 31 }, { 2, 28/*año bisiesto*/ }, { 3, 31 }, { 4, 30 }, { 5, 31 }, { 6, 30 }, { 7, 31 }, { 8, 31 }, { 9, 30 }, { 10, 31 }, { 11, 30 }, { 12, 31 } };
-            if (dates[1].Length == 2) // Primero va el mes para poder comprobar luego los días del mes 28-31 
+            int anio = date.Year;
+            int anioActual = Hoy.Year;
+            double diffDays = YearDiff(date, Hoy, anio, anioActual);
+            int diffYear = YearDiff(anio, anioActual);
+            string diferencias = "Estos son los dias " + diffDays + ". Y estos los años " + diffYear;
+            return diferencias;
+        }
+        private static int YearDiff(int anio, int anioActual)
+        {
+            int year = 0;
+            if (anio < anioActual)
             {
-                if ((comprobatedNum[1] > 12) || (comprobatedNum[1] < 1))
-                {
-                    if (comprobatedNum[] )
-                    {
+                year = anioActual - anio;
 
-                    }
-                    if (dates[0].Length == 2)
+            }
+            if (anio > anioActual)
+            {
+                year = anio - anioActual;
+            }
+            return year;
+        }
+        private static double YearDiff(DateTime fecha, DateTime Hoy, int anio, int anioActual)
+        {
+            TimeSpan diferencias;
+            double Dias = 0;
+            if (anio < anioActual)
+            {
+                diferencias = Hoy - fecha;
+                Dias = diferencias.TotalDays;
+            }
+            if (anio > anioActual)
+            {
+                diferencias = fecha - Hoy;
+                Dias = diferencias.TotalDays;
+            }
+            if (anio.Equals(anioActual))
+            {
+                if (fecha.Month > Hoy.Month)
+                {
+                    diferencias = fecha - Hoy;
+                    Dias = diferencias.TotalDays;
+                }
+                if (fecha.Month < Hoy.Month)
+                {
+                    diferencias = Hoy - fecha;
+                    Dias = diferencias.TotalDays;
+                }
+                if (fecha.Month.Equals(Hoy.Month))
+                {
+                    if (fecha.Day < Hoy.Day)
                     {
-                        if (dates[2].Length == 4)
-                        {
-                            result = true;
-                        }
-                        else
-                        {
-                            Messages.FailData();
-                        }
+                        diferencias = Hoy - fecha;
+                        Dias = diferencias.TotalDays;
                     }
-                    else
+                    if (fecha.Day > Hoy.Day)
                     {
-                        Messages.FailData();
+                        diferencias = fecha - Hoy;
+                        Dias = diferencias.TotalDays;
+                    }
+                    if (fecha.Day.Equals(Hoy.Day))
+                    {
+                        Dias = 0;
                     }
                 }
-                
             }
-            else
-            {
-                Messages.FailData();
-            }
-            return result;
+            return Dias;
         }
-        //La edad en años correspondiente a cada fecha para la fecha actual, en años y en días.
     }
 }
