@@ -1,29 +1,29 @@
 ﻿using System;
 namespace FechasYEdades
 {
-    public class Funciones
+    public class Functions
     {/// <summary>
-    /// Recoge la fecha
-    /// </summary>
-    /// <returns>La fecha comprobada y correcta</returns>
+     /// Recoge la fecha
+     /// </summary>
+     /// <returns>La fecha comprobada y correcta</returns>
         public static DateTime ReadData(string message)
         {
             DateTime data = new DateTime();
-            bool comprobante = false;
+            bool itsCorrect = false;
             do
             {
                 Console.Clear();
                 Console.WriteLine(message);
                 if (DateTime.TryParse(Console.ReadLine(), out data))
                 {
-                    comprobante = true;
+                    itsCorrect = true;
                 }
                 else
                 {
                     Messages.Print("La fecha no es válida. Inténtalo otra vez.");
                 }
             }
-            while (!comprobante);
+            while (!itsCorrect);
             return data;
         }
         /// <summary>

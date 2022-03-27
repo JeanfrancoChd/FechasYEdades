@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FechasYEdades
 {
     class Messages
     {
+        /// <summary>
+        /// Presenta una portada
+        /// </summary>
         public static void ShowIntro()
         {
             Console.WriteLine("------------------------------");
@@ -17,17 +16,13 @@ namespace FechasYEdades
             Console.WriteLine("------------------------------");
             Console.ReadKey(true);
         }
-        public static void FailData()
+        /// <summary>
+        /// Muestra un mensaje de aviso
+        /// </summary>
+        public static void Print(string message)
         {
             Console.Clear();
-            Console.WriteLine("Entrada de datos fallida. Formato erróneo.");
-            Console.WriteLine("Pulse una tecla para continuar...");
-            Console.ReadKey();
-        }
-        public static void Print(string mensaje)
-        {
-            Console.Clear();
-            Console.WriteLine(mensaje);
+            Console.WriteLine(message);
             Console.WriteLine("Pulse una tecla para continuar...");
             Console.ReadKey();
         }
