@@ -16,7 +16,7 @@ namespace TestFechaYEdades
             DateTime date = new DateTime(1, 1, 21);
             //Act
             string text = Functions.DiffDate(date, hoy);
-            string expectedText = "Estos son los dias " + 738220 + ". Y estos los años " + 2021;
+            string expectedText = "Estos son los dias " + 738221 + ". Y estos los años " + 2021;
             //Assert
             Assert.AreEqual(text, expectedText);
         }
@@ -32,7 +32,7 @@ namespace TestFechaYEdades
             string text = Functions.DiffDate(date, hoy);
             string expectedText = "Estos son los dias " + 7123 + ". Y estos los años " + 2;
             //Assert
-            Assert.AreEqual(text, expectedText);
+            Assert.AreNotEqual(text, expectedText);
         }
         [TestMethod]
         public void TestDateThree()
@@ -43,7 +43,7 @@ namespace TestFechaYEdades
             DateTime date = new DateTime(20, 11, 5);
             //Act
             string text = Functions.DiffDate(date, hoy);
-            string expectedText = "Estos son los dias " + 730992 + ". Y estos los años " + 2002;
+            string expectedText = "Estos son los dias " + 730993 + ". Y estos los años " + 2002;
             //Assert
             Assert.AreEqual(text, expectedText);
         }
@@ -59,7 +59,7 @@ namespace TestFechaYEdades
             string text = Functions.DiffDate(date, hoy);
             string expectedText = "Estos son los dias " + 7123 + ". Y estos los años " + 2;
             //Assert
-            Assert.AreEqual(text, expectedText);
+            Assert.AreNotEqual(text, expectedText);
         }
         [TestMethod]
         public void TestDateFive()
@@ -73,7 +73,7 @@ namespace TestFechaYEdades
             string text = Functions.DiffDate(date, hoy);
             string expectedText = "Estos son los dias " + 727599 + ". Y estos los años " + 1992;
             //Assert
-            Assert.AreEqual(text, expectedText);
+            Assert.AreNotEqual(text, expectedText);
         }
 
     }
