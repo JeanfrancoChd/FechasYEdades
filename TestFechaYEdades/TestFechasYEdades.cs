@@ -4,9 +4,15 @@ using System;
 
 namespace TestFechaYEdades
 {
+    /// <summary>
+    /// Pruebas de Fechas
+    /// </summary>
     [TestClass]
-    public class TestFechasYEdades
+    public class TestDate
     {
+        /// <summary>
+        /// Comprueba que el resultado sea correcto con unos valores dentro de los parametros
+        /// </summary>
         [TestMethod]
         public void TestDateOne()
         {
@@ -23,7 +29,6 @@ namespace TestFechaYEdades
         [TestMethod]
         public void TestDateTwo()
         {
-            //Tiene que dar error.
             Functions codificacion = new Functions();
             //Arrange
             DateTime hoy = DateTime.Today;
@@ -47,10 +52,19 @@ namespace TestFechaYEdades
             //Assert
             Assert.AreEqual(text, expectedText);
         }
+    }
+    /// <summary>
+    /// Serie de pruebas con fechas erroneas dentro de los parametros
+    /// </summary>
+    [TestClass]
+    public class TestWrongDays
+    {
+        /// <summary>
+        /// Prueba con día negativo
+        /// </summary>
         [TestMethod]
-        public void TestDateFour()
+        public void TestNegativeDay()
         {
-            //Tiene que dar error.
             Functions codificacion = new Functions();
             //Arrange
             DateTime hoy = DateTime.Today;
@@ -62,9 +76,11 @@ namespace TestFechaYEdades
             Assert.AreNotEqual(text, expectedText);
         }
         [TestMethod]
-        public void TestDateFive()
+        /// <summary>
+        ///Prueba con dia imposible para ciertos meses
+        /// </summary>
+        public void TestWrongDaysPerMonth()
         {
-            //Tiene que dar error.
             Functions codificacion = new Functions();
             //Arrange
             DateTime hoy = DateTime.Today;
@@ -75,7 +91,5 @@ namespace TestFechaYEdades
             //Assert
             Assert.AreNotEqual(text, expectedText);
         }
-
     }
-
 }

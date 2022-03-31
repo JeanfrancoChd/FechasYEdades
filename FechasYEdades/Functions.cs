@@ -2,59 +2,171 @@
 namespace FechasYEdades
 {
     public class Functions
-    {/// <summary>
-     /// Recoge la fecha
-     /// </summary>
-     /// <returns>La fecha comprobada y correcta</returns>
-        public static DateTime ReadData(string message)
+    {
+        /// <summary>
+        /// Recoge la fecha
+        /// </summary>
+        /// <returns>La fecha comprobada y correcta</returns>
+        public static DateTime ReadData(string message,ref bool negative)
         {
             DateTime data = new DateTime();
+            string date = "";
             bool itsCorrect = false;
+            string error = "";
             do
             {
                 Console.Clear();
                 Console.WriteLine(message);
-                if (DateTime.TryParse(Console.ReadLine(), out data))
+                date = Console.ReadLine();
+                if (date.Length.Equals(0))
                 {
-                    itsCorrect = true;
+                    Messages.Print("Error. Fecha vacía... ");
                 }
                 else
                 {
-                    Messages.Print("La fecha no es válida. Inténtalo otra vez.");
+                    string[] splittedDate = date.Split('/');
+                    if (CheckDate(ref error, splittedDate, date, ref data, ref negative))
+                    {
+                        itsCorrect = true;
+                    }
+                    else
+                    {
+                        Messages.Print(error);
+                    }
                 }
             }
             while (!itsCorrect);
             return data;
         }
+
+        /// <summary>
+        /// Comprueba que la fecha introducida sea una fecha válida.
+        /// </summary>
+        /// <param name="error">Guarda el error</param>
+        /// <param name="splittedDate">Guarda la fecha en un array</param>
+        /// <param name="date"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool CheckDate(ref string error, string[] splittedDate, string date, ref DateTime data, ref bool negative)
+        {
+            bool leave = false;
+            bool itsCorrect = false;
+            DateTime today = DateTime.Today;
+            while (!leave)
+            {
+                if (splittedDate.Length != 3)
+                {
+                    leave = true;
+                    error = "Error de formato.";
+                }
+                else
+                {
+                    if (Int32.TryParse(splittedDate[0], out int auxDay))
+                    {
+                        if ((auxDay >= 31) || (auxDay < 0))
+                        {
+                            leave = true;
+                            error = "El día " + auxDay + " no existe.";
+                        }
+                        else
+                        {
+                            if (Int32.TryParse(splittedDate[1], out int auxMonth))
+                            {
+                                if ((auxMonth >= 12) || (auxMonth < 0))
+                                {
+                                    leave = true;
+                                    error = "El mes " + auxMonth + " no existe.";
+                                }
+                                else
+                                {
+                                    if (Int32.TryParse(splittedDate[2], out int auxYear))
+                                    {
+                                        if (auxYear < 0)
+                                        {
+                                            int newYear = ((auxYear * (-1)) + today.Year);
+                                            string newDate = auxDay + "/" + auxMonth + "/" + newYear;
+                                            if (DateTime.TryParse(newDate, out data))
+                                            {
+                                                itsCorrect = true;
+                                                negative = true;
+                                            }
+                                            else
+                                            {
+                                                error = "El mes " + auxMonth + " no tiene " + auxDay + " días.";
+                                            }
+                                            leave = true;
+                                        }
+                                        else
+                                        {
+                                            if (DateTime.TryParse(date, out data))
+                                            {
+                                                itsCorrect = true;
+                                            }
+                                            else
+                                            {
+                                                error = "El mes " + auxMonth + " no tiene " + auxDay + " días.";
+                                            }
+                                            leave = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        error = splittedDate[2] + "no es un número.";
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                error = splittedDate[1] + "no es un número.";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        error = splittedDate[0] + "no es un número.";
+                    }
+                }
+            }
+            return itsCorrect;
+        }
+
         /// <summary>
         /// Calcula las diferencias y las guarda.
         /// </summary>
         /// <returns>Las diferencias de dias y años</returns>
-        public static string DiffDate(DateTime date, DateTime currentDate)
+        public static string DiffDate(DateTime date, DateTime currentDate, bool negative)
         {
             int year = date.Year;
             int currentYear = currentDate.Year;
             double diffDays = DayDiff(date, currentDate, year, currentYear);
-            int diffYear = YearDiff(year, currentYear);
-            string diferencias = "Estos son los dias " + diffDays + ". Y estos los años " + diffYear;
+            int diffYear = YearDiff(year, currentYear,negative);
+            string diferencias = "Estos son los dias de diferencia con hoy " + diffDays + ". Y estos los años " + diffYear;
             return diferencias;
         }
         /// <summary>
         /// Calcula la diferencia de años.
         /// </summary>
         /// <returns>Diferencia de años en positivo</returns>
-        private static int YearDiff(int year, int currentYear)
+        private static int YearDiff(int year, int currentYear,bool negative)
         {
-            if (year < currentYear)
+            int finalYear = 0;
+           if (!negative)
             {
-                year = currentYear - year;
+                if (year < currentYear)
+                {
+                    finalYear = currentYear - year;
 
+                }
+                if (year > currentYear)
+                {
+                    finalYear = year - currentYear;
+                }
             }
-            if (year > currentYear)
+            else
             {
-                year = year - currentYear;
+                finalYear = year;
             }
-            return year;
+            return finalYear;
         }
         /// <summary>
         /// Calcula la diferencia de dias
@@ -64,46 +176,46 @@ namespace FechasYEdades
         {
             TimeSpan diff;
             double day = 0;
-            if (year < currentYear)
-            {
-                diff = currentDate - date;
-                day = diff.TotalDays;
-            }
-            if (year > currentYear)
-            {
-                diff = date - currentDate;
-                day = diff.TotalDays;
-            }
-            if (year.Equals(currentYear))
-            {
-                if (date.Month > currentDate.Month)
-                {
-                    diff = date - currentDate;
-                    day = diff.TotalDays;
-                }
-                if (date.Month < currentDate.Month)
+                if (year < currentYear)
                 {
                     diff = currentDate - date;
                     day = diff.TotalDays;
                 }
-                if (date.Month.Equals(currentDate.Month))
+                if (year > currentYear)
                 {
-                    if (date.Day < currentDate.Day)
-                    {
-                        diff = currentDate - date;
-                        day = diff.TotalDays;
-                    }
-                    if (date.Day > currentDate.Day)
+                    diff = date - currentDate;
+                    day = diff.TotalDays;
+                }
+                if (year.Equals(currentYear))
+                {
+                    if (date.Month > currentDate.Month)
                     {
                         diff = date - currentDate;
                         day = diff.TotalDays;
                     }
-                    if (date.Day.Equals(currentDate.Day))
+                    if (date.Month < currentDate.Month)
                     {
-                        day = 0;
+                        diff = currentDate - date;
+                        day = diff.TotalDays;
                     }
-                }
-            }
+                    if (date.Month.Equals(currentDate.Month))
+                    {
+                        if (date.Day < currentDate.Day)
+                        {
+                            diff = currentDate - date;
+                            day = diff.TotalDays;
+                        }
+                        if (date.Day > currentDate.Day)
+                        {
+                            diff = date - currentDate;
+                            day = diff.TotalDays;
+                        }
+                        if (date.Day.Equals(currentDate.Day))
+                        {
+                            day = 0;
+                        }
+                    }
+                }                 
             return day;
         }
     }
