@@ -44,8 +44,8 @@ namespace FechasYEdades
         /// </summary>
         /// <param name="error">Guarda el error</param>
         /// <param name="splittedDate">Guarda la fecha en un array</param>
-        /// <param name="date"></param>
-        /// <param name="data"></param>
+        /// <param name="date">Fecha recogida por el usuario</param>
+        /// <param name="data">Fecha en DateTime</param>
         /// <returns></returns>
         public static bool CheckDate(ref string error, string[] splittedDate, string date, ref DateTime data, ref bool negative)
         {
@@ -140,7 +140,7 @@ namespace FechasYEdades
             int currentYear = currentDate.Year;
             double diffDays = DayDiff(date, currentDate, year, currentYear);
             int diffYear = YearDiff(year, currentYear,negative);
-            string diferencias = "Estos son los dias de diferencia con hoy " + diffDays + ". Y estos los años " + diffYear;
+            string diferencias = "Diferencia con la fecha actual en días: " + diffDays + ". Y en años: " + diffYear +".";
             return diferencias;
         }
         /// <summary>
@@ -149,7 +149,7 @@ namespace FechasYEdades
         /// <returns>Diferencia de años en positivo</returns>
         private static int YearDiff(int year, int currentYear,bool negative)
         {
-            int finalYear = 0;
+           int finalYear = 0;
            if (!negative)
             {
                 if (year < currentYear)
@@ -217,6 +217,35 @@ namespace FechasYEdades
                     }
                 }                 
             return day;
+        }
+        /// <summary>
+        /// Calcula la diferencia entre las dos fechas
+        /// </summary>
+        /// <param name="dateOne">Primer fecha solicitada</param>
+        /// <param name="dateTwo">Segunda fecha solicitada</param>
+        /// <returns>Retorna un string concatenado del resultado</returns>
+        public static string DatesDiff (DateTime dateOne, DateTime dateTwo)
+        {
+            string final = "";
+            TimeSpan diff;
+            double day = 0;
+            if(dateOne > dateTwo)
+            {
+                diff = dateOne - dateTwo;
+                day = diff.TotalDays;
+                final ="Diferencia en años: " + (dateOne.Year - dateTwo.Year).ToString() + ". Y diferencia en días: " + day;
+            }
+            if (dateTwo > dateOne)
+            {
+                diff = dateTwo - dateOne;
+                day = diff.TotalDays;
+                final = "Diferencia en años: " + (dateTwo.Year - dateOne.Year).ToString() + ". Y diferencia en días: " + day;
+            }
+            if (dateOne.Equals(dateTwo))
+            {
+                final = "Las dos fechas son iguales.";
+            }
+            return final;
         }
     }
 }
