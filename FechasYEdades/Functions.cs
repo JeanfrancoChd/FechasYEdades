@@ -140,7 +140,7 @@ namespace FechasYEdades
             int currentYear = currentDate.Year;
             double diffDays = DayDiff(date, currentDate, year, currentYear);
             int diffYear = YearDiff(year, currentYear,negative);
-            string diferencias = "Diferencia con la fecha actual en días: " + diffDays + ". Y en años: " + diffYear +".";
+            string diferencias = "Diferencia con la fecha actual en dias: " + diffDays + ". Y en años: " + diffYear +".";
             return diferencias;
         }
         /// <summary>

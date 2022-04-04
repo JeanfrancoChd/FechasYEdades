@@ -1,6 +1,7 @@
 using FechasYEdades;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 
 namespace TestFechaYEdades
 {
@@ -8,88 +9,108 @@ namespace TestFechaYEdades
     /// Pruebas de Fechas
     /// </summary>
     [TestClass]
-    public class TestDate
+    public class TestDateDC
     {
         /// <summary>
         /// Comprueba que el resultado sea correcto con unos valores dentro de los parametros
         /// </summary>
         [TestMethod]
-        public void TestDateOne()
+        public void TestDateDCOne()
         {
-            Functions codificacion = new Functions();
             //Arrange
-            DateTime hoy = DateTime.Today;
-            DateTime date = new DateTime(1, 1, 21);
+            DateTime hoy = new DateTime(2022, 04, 4);
+            DateTime date = new DateTime(2021,1,21);
+            bool negative = false;
             //Act
-            string text = Functions.DiffDate(date, hoy);
-            string expectedText = "Estos son los dias " + 738221 + ". Y estos los años " + 2021;
-            //Assert
-            Assert.AreEqual(text, expectedText);
-        }
-        [TestMethod]
-        public void TestDateTwo()
-        {
-            Functions codificacion = new Functions();
-            //Arrange
-            DateTime hoy = DateTime.Today;
-            DateTime date = new DateTime(1, 1, 21);
-            //Act
-            string text = Functions.DiffDate(date, hoy);
-            string expectedText = "Estos son los dias " + 7123 + ". Y estos los años " + 2;
+            string text = Functions.DiffDate(date, hoy, negative);
+            string expectedText = "Diferencia con la fecha actual en dias: " + 1231 + ". Y en años: " + 1 + ".";
             //Assert
             Assert.AreNotEqual(text, expectedText);
         }
+        /// <summary>
+        /// Comprueba que la operacion se realiza bien, haciendose mal 
+        /// </summary>
         [TestMethod]
-        public void TestDateThree()
+        public void TestDateDCTwo()
         {
-            Functions codificacion = new Functions();
             //Arrange
-            DateTime hoy = DateTime.Today;
-            DateTime date = new DateTime(20, 11, 5);
+            DateTime hoy = new DateTime(2022, 04, 4);
+            DateTime date = new DateTime(1, 1, 21);
+            bool negative = false;
             //Act
-            string text = Functions.DiffDate(date, hoy);
-            string expectedText = "Estos son los dias " + 730993 + ". Y estos los años " + 2002;
+            string text = Functions.DiffDate(date, hoy, negative);
+            string expectedText = "Diferencia con la fecha actual en dias: " + 12231 + ". Y en años: " + 123123 + ".";
+            //Assert
+            Assert.AreNotEqual(text, expectedText);
+        }
+        /// <summary>
+        /// Comprobacion normal de fechas DC
+        /// </summary>
+        [TestMethod]
+        public void TestDateDCThree()
+        {
+            //Arrange
+            DateTime hoy = new DateTime(2022,04,4);
+            DateTime date = new DateTime(2020,11,05);
+            bool negative = false;
+            //Act
+            string text = Functions.DiffDate(date, hoy, negative);
+            string expectedText = "Diferencia con la fecha actual en dias: " + 515 + ". Y en años: " + 2 + ".";
             //Assert
             Assert.AreEqual(text, expectedText);
         }
     }
+
     /// <summary>
-    /// Serie de pruebas con fechas erroneas dentro de los parametros
+    /// Compurueba la diferencia entre las dos fechas inciales.
     /// </summary>
     [TestClass]
-    public class TestWrongDays
+    public class TestDatesDiff
     {
         /// <summary>
-        /// Prueba con día negativo
+        /// Comprobar Diferencia entre fechas
         /// </summary>
         [TestMethod]
-        public void TestNegativeDay()
+        public void TestDateDatesDiffOne()
         {
-            Functions codificacion = new Functions();
             //Arrange
-            DateTime hoy = DateTime.Today;
-            DateTime date = new DateTime(-1, 12, 21);
+            DateTime dateOne = new DateTime(2004, 4, 22);
+            DateTime dateTwo = new DateTime(2020, 11,5);
             //Act
-            string text = Functions.DiffDate(date, hoy);
-            string expectedText = "Estos son los dias " + 7123 + ". Y estos los años " + 2;
+            string expectedText = Functions.DatesDiff(dateOne, dateTwo);
+            string text = "Diferencia en años: " + 16 + ". Y diferencia en días: " + 6041;
             //Assert
-            Assert.AreNotEqual(text, expectedText);
+            Assert.AreEqual(text, expectedText);
         }
-        [TestMethod]
         /// <summary>
-        ///Prueba con dia imposible para ciertos meses
+        /// Comprobar Diferencia entre fechas
         /// </summary>
-        public void TestWrongDaysPerMonth()
+        [TestMethod]
+        public void TestDateDatesDiffTwo()
         {
-            Functions codificacion = new Functions();
             //Arrange
-            DateTime hoy = DateTime.Today;
-            DateTime date = new DateTime(30, 2, 1992);
+            DateTime dateOne = new DateTime(2004 ,4 ,18);
+            DateTime dateTwo = new DateTime(2001, 11, 19);
             //Act
-            string text = Functions.DiffDate(date, hoy);
-            string expectedText = "Estos son los dias " + 727599 + ". Y estos los años " + 1992;
+            string expectedText = Functions.DatesDiff(dateOne, dateTwo);
+            string text = "Diferencia en años: " + 3 + ". Y diferencia en días: " + 881;
             //Assert
-            Assert.AreNotEqual(text, expectedText);
+            Assert.AreEqual(text, expectedText);
+        }
+        /// <summary>
+        /// Comprobar Diferencia entre fechas
+        /// </summary>
+        [TestMethod]
+        public void TestDateDatesDiffThree()
+        {
+            //Arrange
+            DateTime dateOne = new DateTime(1982, 4, 1);
+            DateTime dateTwo = new DateTime(2001, 11, 19);
+            //Act
+            string expectedText = Functions.DatesDiff(dateOne, dateTwo);
+            string text = "Diferencia en años: " + 19 + ". Y diferencia en días: " + 7172;
+            //Assert
+            Assert.AreEqual(text, expectedText);
         }
     }
 }
