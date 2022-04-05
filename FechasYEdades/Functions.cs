@@ -233,13 +233,13 @@ namespace FechasYEdades
             {
                 diff = dateOne - dateTwo;
                 day = diff.TotalDays;
-                final ="Diferencia en años: " + (dateOne.Year - dateTwo.Year).ToString() + ". Y diferencia en días: " + day;
+                final = "Diferencia en años entre las dos fecha: " + (dateOne.Year - dateTwo.Year).ToString() + ". Y diferencia en días: " + day;
             }
             if (dateTwo > dateOne)
             {
                 diff = dateTwo - dateOne;
                 day = diff.TotalDays;
-                final = "Diferencia en años: " + (dateTwo.Year - dateOne.Year).ToString() + ". Y diferencia en días: " + day;
+                final = "Diferencia en años entre las dos fecha: " + (dateTwo.Year - dateOne.Year).ToString() + ". Y diferencia en días: " + day;
             }
             if (dateOne.Equals(dateTwo))
             {

@@ -20,8 +20,8 @@ namespace FechasYEdades
             string diffTwo = Functions.DiffDate(dateTwo, currentDate,negative2);
             //Mostrar la diferencia entre ellas
             string diffBetween = Functions.DatesDiff(dateOne, dateTwo);            
-            Messages.Print(diffOne + "\n" + diffTwo + "\n\n\n" + diffBetween);
-            Console.WriteLine("Pulsa una tecla para terminar...");
+            Messages.Print( diffOne + "\n" + diffTwo + "\n\n\n" + diffBetween);
+            //Fin de programa
             Console.ReadKey();
         }
     }

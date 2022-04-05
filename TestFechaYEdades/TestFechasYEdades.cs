@@ -78,7 +78,7 @@ namespace TestFechaYEdades
             DateTime dateTwo = new DateTime(2020, 11,5);
             //Act
             string expectedText = Functions.DatesDiff(dateOne, dateTwo);
-            string text = "Diferencia en años: " + 16 + ". Y diferencia en días: " + 6041;
+            string text = "Diferencia en años entre las dos fecha: " + 16 + ". Y diferencia en días: " + 6041;
             //Assert
             Assert.AreEqual(text, expectedText);
         }
@@ -93,7 +93,7 @@ namespace TestFechaYEdades
             DateTime dateTwo = new DateTime(2001, 11, 19);
             //Act
             string expectedText = Functions.DatesDiff(dateOne, dateTwo);
-            string text = "Diferencia en años: " + 3 + ". Y diferencia en días: " + 881;
+            string text = "Diferencia en años entre las dos fecha: " + 3 + ". Y diferencia en días: " + 881;
             //Assert
             Assert.AreEqual(text, expectedText);
         }
@@ -108,7 +108,7 @@ namespace TestFechaYEdades
             DateTime dateTwo = new DateTime(2001, 11, 19);
             //Act
             string expectedText = Functions.DatesDiff(dateOne, dateTwo);
-            string text = "Diferencia en años: " + 19 + ". Y diferencia en días: " + 7172;
+            string text = "Diferencia en años entre las dos fecha: " + 19 + ". Y diferencia en días: " + 7172;
             //Assert
             Assert.AreEqual(text, expectedText);
         }
